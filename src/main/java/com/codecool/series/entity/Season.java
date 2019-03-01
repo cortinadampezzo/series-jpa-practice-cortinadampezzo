@@ -21,9 +21,16 @@ public class Season {
     @ManyToOne
     private Series series;
 
+    @Transient
+    private Integer numberOfEpisodes;
+
     @Singular
     @OneToMany(mappedBy = "season", cascade = CascadeType.PERSIST)
     @EqualsAndHashCode.Exclude
     private List<Episode> episodes;
+
+    public void calculateNumberOfEpisodes() {
+        numberOfEpisodes = episodes.size();
+    }
 
 }

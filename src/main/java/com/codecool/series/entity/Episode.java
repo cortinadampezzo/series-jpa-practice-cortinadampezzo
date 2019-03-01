@@ -22,9 +22,9 @@ public class Episode {
     @Column(nullable = false, unique = true)
     private String episodeCode;
 
+    private LocalDate originalAirDate;
+
     @ManyToOne
     private Season season;
-
-    private LocalDate originalAirDate;
 
 }

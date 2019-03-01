@@ -70,6 +70,9 @@ public class SeriesJpaPracticeApplication {
             skinsS02E09.setSeason(skinsS02);
             skinsS02E10.setSeason(skinsS02);
 
+            skinsS01.calculateNumberOfEpisodes();
+            skinsS02.calculateNumberOfEpisodes();
+
             Series skins = Series.builder()
                     .title("Skins")
                     .genre(Genre.DRAMA)
