@@ -2,6 +2,7 @@ package com.codecool.series.entity;
 
 import lombok.*;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -9,21 +10,21 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Season {
+public class Episode {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
+    private String title;
+
     @Column(nullable = false, unique = true)
-    private String seasonCode;
+    private String episodeCode;
 
     @ManyToOne
-    private Series series;
+    private Season season;
 
-    @Singular
-    @OneToMany(mappedBy = "season", cascade = CascadeType.PERSIST)
-    @EqualsAndHashCode.Exclude
-    private List<Episode> episodes;
+    private LocalDate originalAirDate;
 
 }
