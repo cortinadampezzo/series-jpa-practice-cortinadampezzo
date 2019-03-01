@@ -1,6 +1,7 @@
 package com.codecool.series;
 
 import com.codecool.series.entity.Genre;
+import com.codecool.series.entity.Season;
 import com.codecool.series.entity.Series;
 import com.codecool.series.repository.SeriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,24 @@ public class SeriesJpaPracticeApplication {
     @Profile("production")
     public CommandLineRunner init() {
         return args -> {
+
+            Season skinsS01 = Season.builder()
+                    .seasonCode("S01")
+                    .build();
+
+            Season skinsS02 = Season.builder()
+                    .seasonCode("S02")
+                    .build();
+
             Series skins = Series.builder()
                     .title("Skins")
                     .genre(Genre.DRAMA)
+                    .season(skinsS01)
+                    .season(skinsS02)
                     .build();
+
+            skinsS01.setSeries(skins);
+            skinsS02.setSeries(skins);
 
             seriesRepository.save(skins);
         };
