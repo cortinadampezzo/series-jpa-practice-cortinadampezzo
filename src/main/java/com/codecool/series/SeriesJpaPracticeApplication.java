@@ -27,11 +27,11 @@ public class SeriesJpaPracticeApplication {
         return args -> {
 
             Season skinsS01 = Season.builder()
-                    .seasonCode("S01")
+                    .seasonCode("Skins-S01")
                     .build();
 
             Season skinsS02 = Season.builder()
-                    .seasonCode("S02")
+                    .seasonCode("Skins-S02")
                     .build();
 
             Series skins = Series.builder()
