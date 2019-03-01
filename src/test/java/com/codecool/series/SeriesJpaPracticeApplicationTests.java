@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -33,6 +34,15 @@ public class SeriesJpaPracticeApplicationTests {
 
         List<Series> series = seriesRepository.findAll();
         assertThat(series).hasSize(1);
+    }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void titleShouldBeNotNull() {
+        Series boJackHorseman = Series.builder()
+                .genre(Genre.ANIMATION)
+                .build();
+
+        seriesRepository.save(boJackHorseman);
     }
 
 }

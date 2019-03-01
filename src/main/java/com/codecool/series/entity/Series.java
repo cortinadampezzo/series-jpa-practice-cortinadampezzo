@@ -14,7 +14,7 @@ public class Series {
     @GeneratedValue
     private Long id;
 
-    @NonNull
+    @Column(nullable = false)
     private String title;
 
     @Enumerated(EnumType.STRING)
