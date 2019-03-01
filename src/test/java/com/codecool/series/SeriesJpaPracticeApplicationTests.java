@@ -1,8 +1,10 @@
 package com.codecool.series;
 
+import com.codecool.series.entity.Episode;
 import com.codecool.series.entity.Genre;
 import com.codecool.series.entity.Season;
 import com.codecool.series.entity.Series;
+import com.codecool.series.repository.EpisodeRepository;
 import com.codecool.series.repository.SeasonRepository;
 import com.codecool.series.repository.SeriesRepository;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,6 +30,9 @@ public class SeriesJpaPracticeApplicationTests {
 
     @Autowired
     private SeasonRepository seasonRepository;
+
+    @Autowired
+    private EpisodeRepository episodeRepository;
 
     @Test
     public void saveOneSimple() {
@@ -63,6 +69,38 @@ public class SeriesJpaPracticeApplicationTests {
                 .build();
 
         seasonRepository.saveAndFlush(skinsS02);
+    }
+
+    @Test
+    public void persistence() {
+        Episode blackMirrorS03E04 = Episode.builder()
+                .title("San Junipero")
+                .episodeCode("Black Mirror-S03E04")
+                .originalAirDate(LocalDate.of(2016, 10, 21))
+                .build();
+
+        Season blackMirrorS03 = Season.builder()
+                .seasonCode("Black Mirror-S03")
+                .episode(blackMirrorS03E04)
+                .build();
+
+        Series blackMirror = Series.builder()
+                .title("Black Mirror")
+                .genre(Genre.DRAMA)
+                .season(blackMirrorS03)
+                .build();
+
+        seriesRepository.save(blackMirror);
+
+        List<Episode> episodes = episodeRepository.findAll();
+        assertThat(episodes)
+                .hasSize(1)
+                .allMatch(episode1 -> episode1.getId() > 0L);
+
+        List<Season> seasons = seasonRepository.findAll();
+        assertThat(seasons)
+                .hasSize(1)
+                .allMatch(season1 -> season1.getId() > 0L);
     }
 
 }
